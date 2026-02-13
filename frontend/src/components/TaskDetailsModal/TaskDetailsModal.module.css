@@ -1,0 +1,128 @@
+.background_container {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 50px;
+
+    z-index: 9999;
+}
+
+.task_container {
+    background-color: white;
+    padding: 0px 15px 15px 15px;
+    border-radius: 10px;
+    min-width: 300px;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: black;
+    margin-inline: 10px;
+}
+
+.close_modal_button_container {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding-block: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid grey;
+}
+
+.close_modal_button {
+    color: black;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding-inline: 5px;
+}
+
+.close_modal_button:hover {
+    color: red;
+}
+
+.low_priority {
+    color: white;
+    background-color: #4CAF50;
+    padding: 3px 10px;
+    border-radius: 2px;
+}
+
+.medium_priority {
+    color: white;
+    background-color: rgb(231, 231, 71);
+    padding: 3px 10px;
+    border-radius: 2px;
+}
+
+.high_priority {
+    color: white;
+    background-color: rgb(177, 60, 60);
+    padding: 3px 10px;
+    border-radius: 2px;
+}
+
+.task_title {
+    color: black;
+    padding-block: 10px;
+    min-width: 0;
+    word-wrap: break-word;
+    font-weight: 900;
+}
+
+.task_created_by {
+    color: black;
+}
+
+.task_creation_date {
+    color: black;
+}
+
+.text_strong {
+    color: black;
+    font-weight: 700;
+}
+
+.task_description_label {
+    color: black;
+    margin-top: 16px;
+}
+
+.task_description_container {
+    border: 2px solid gray;
+    width: 100%;
+    padding: 10px 5px;
+    border-radius: 5px;
+    min-height: 80px;
+}
+
+.task_description {
+    color: black;
+    min-width: 0;
+    word-wrap: break-word;
+}
+
+.task_solution_label {
+    color: black;
+    margin-top: 16px;
+}
+
+.task_solution_container {
+    border: 2px solid gray;
+    width: 100%;
+    padding: 10px 5px;
+    border-radius: 5px;
+    min-height: 120px;
+}
+
+.task_solution {
+    color: black;
+    min-width: 0;
+    word-wrap: break-word;  
+}
