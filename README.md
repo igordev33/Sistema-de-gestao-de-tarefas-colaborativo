@@ -143,12 +143,20 @@ Este projeto está licenciado sob os termos definidos no arquivo [LICENSE](./LIC
 ## 🎥 Demonstração do Projeto
 
 ### 📌 Parte 1 – Criando uma tarefa
-[![Assistir Parte 1](https://img.youtube.com/vi/0LIAXsPIXvU/0.jpg)](https://youtu.be/0LIAXsPIXvU)
+<p align="center">
+  <a href="https://youtu.be/0LIAXsPIXvU">
+    <img src="https://img.youtube.com/vi/0LIAXsPIXvU/0.jpg" width="600"/>
+  </a>
+</p>
 
 ---
 
 ### 📌 Parte 2 – Conclusão da tarefa | Visualização da tarefa | Paginação | Filtro
-[![Assistir Parte 2](https://img.youtube.com/vi/JZiY-feLg1k/0.jpg)](https://youtu.be/JZiY-feLg1k)
+<p align="center">
+  <a href="https://youtu.be/JZiY-feLg1k">
+    <img src="https://img.youtube.com/vi/JZiY-feLg1k/0.jpg" width="600"/>
+  </a>
+</p>
 
 ---
 
