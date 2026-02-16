@@ -1,0 +1,24 @@
+services:
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+      args:
+        - VITE_API_PASSWORD=${VITE_API_PASSWORD}
+        - VITE_API_USER=${VITE_API_USER}
+        - VITE_API_URL=${VITE_API_URL}
+    ports:
+      - "80:80"
+    restart: unless-stopped
