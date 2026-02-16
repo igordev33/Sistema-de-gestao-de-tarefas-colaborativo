@@ -142,12 +142,12 @@ Este projeto está licenciado sob os termos definidos no arquivo [LICENSE](./LIC
 
 ## 🎥 Demonstração do Projeto
 
-### 📌 Parte 1 – Apresentação do Sistema
+### 📌 Parte 1 – Criando uma tarefa
 [![Assistir Parte 1](https://img.youtube.com/vi/0LIAXsPIXvU/0.jpg)](https://youtu.be/0LIAXsPIXvU)
 
 ---
 
-### 📌 Parte 2 – Fluxo Completo da Aplicação
+### 📌 Parte 2 – Conclusão da tarefa | Visualização da tarefa | Paginação | Filtro
 [![Assistir Parte 2](https://img.youtube.com/vi/JZiY-feLg1k/0.jpg)](https://youtu.be/JZiY-feLg1k)
 
 ---
