@@ -142,16 +142,15 @@ Este projeto está licenciado sob os termos definidos no arquivo [LICENSE](./LIC
 
 ## 🎥 Demonstração do Projeto
 
-### 📌 Parte 1
-[![Assistir Parte 1](./assets/demo1.png)]
-(https://drive.google.com/file/d/1vElsdOtTeT2_tJ9IJyBpabcIidHHOwWG/view)
+### 📌 Parte 1 – Apresentação do Sistema
+[![Assistir Parte 1](https://img.youtube.com/vi/0LIAXsPIXvU/0.jpg)](https://youtu.be/0LIAXsPIXvU)
 
 ---
 
-### 📌 Parte 2
-[![Assistir Parte 2](./assets/demo2.png)]
-(https://drive.google.com/file/d/15I3qE-Bh1Ztm5jQKLx9bTb_4NNtav_LE/view)
+### 📌 Parte 2 – Fluxo Completo da Aplicação
+[![Assistir Parte 2](https://img.youtube.com/vi/JZiY-feLg1k/0.jpg)](https://youtu.be/JZiY-feLg1k)
 
+---
 
 <p align="center">
   Desenvolvido por <a href="https://github.com/igordev33">Igor Ferreira Sampaio</a>
