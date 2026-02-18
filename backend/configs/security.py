@@ -1,8 +1,12 @@
 import secrets
+from warnings import deprecated
 from dotenv import load_dotenv
 from fastapi import Depends, HTTPException
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from passlib.context import CryptContext
 import os
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from jose import JWTError, jwt
 
 load_dotenv()
 
@@ -28,3 +32,24 @@ def autenticar_usuario(credentials: HTTPBasicCredentials = Depends(security)):
             detail="Usuário ou senha incorretos!",
             headers={"WWW-Authenticate": "Basic"}
         )
+    
+crypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+bearer_scheme = HTTPBearer()
+
+def verify_token(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme)):
+    token = credentials.credentials
+    SECRET_KEY = require_env("SECRET_KEY")
+    ALGORITHM = require_env("ALGORITHM")
+
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload
+    except Exception as e:
+        print(f"Erro ao validar token: {e}")
+        raise HTTPException(status_code=401, detail="Token inválido ou expirado")
+    
+def verify_admin(payload: dict = Depends(verify_token)):
+    if not payload.get("admin"):
+        raise HTTPException(status_code=403, detail="Acesso restrito a administradores")
+    return payload

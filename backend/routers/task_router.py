@@ -8,12 +8,12 @@ import models
 import schemas
 
 from configs.session import get_db
-from configs.security import autenticar_usuario
+from configs.security import verify_token
 
-task_router = APIRouter(prefix="/tasks", tags=["Tasks"])
+task_router = APIRouter(prefix="/tasks", tags=["Tasks"], dependencies=[Depends(verify_token)])
 
 @task_router.get("/")
-def get_tasks(db:Session = Depends(get_db), page:int = 1, limit:int=12, credentials: HTTPBasicCredentials = Depends(autenticar_usuario)):
+def get_tasks(db:Session = Depends(get_db), page:int = 1, limit:int=12):
 
     query = db.query(models.Task).order_by(models.Task.task_id.desc())
 
@@ -46,7 +46,7 @@ def get_tasks(db:Session = Depends(get_db), page:int = 1, limit:int=12, credenti
         
 
 @task_router.post("/", status_code=status.HTTP_201_CREATED)
-def create_task(task:schemas.Create_task, db:Session = Depends(get_db), credentials: HTTPBasicCredentials = Depends(autenticar_usuario)):
+def create_task(task:schemas.Create_task, db:Session = Depends(get_db)):
 
     new_task = models.Task(
         task_title = task.task_title, 
@@ -66,7 +66,7 @@ def create_task(task:schemas.Create_task, db:Session = Depends(get_db), credenti
     }
 
 @task_router.patch("/{task_id}")
-def complete_task(task_id:int,task_solution: schemas.CompleteTask, db: Session = Depends(get_db), credentials: HTTPBasicCredentials = Depends(autenticar_usuario)):
+def complete_task(task_id:int,task_solution: schemas.CompleteTask, db: Session = Depends(get_db)):
     task = db.query(models.Task).filter(models.Task.task_id == task_id).first()
 
     if not task:
