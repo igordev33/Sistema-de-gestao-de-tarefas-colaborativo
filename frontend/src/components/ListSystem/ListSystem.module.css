@@ -1,3 +1,40 @@
+.header {
+    width: 100%;
+    background-color: #0e1720;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.37);
+    margin-bottom: 20px;
+}
+
+/* #0f1011 */
+
+.header__container {
+    margin: auto;
+    max-width: 800px;
+    padding: 20px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header__title {
+    color: white;
+    font-size: 1.7rem;
+}
+
+.header__logout_button {
+    border: none;
+    font-size: 1.1rem;
+    color: white;
+    background-color: #B13C3C;
+    font-weight: 800;
+    padding: 5px 30px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.header__logout_button:hover {
+    background-color: #be3838;
+}
+
 .main {
     display: flex;
     flex-direction: column;

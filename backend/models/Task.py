@@ -14,4 +14,6 @@ class Task(Base):
     task_created_by: Mapped[str] = mapped_column(String(20), nullable=False)
     task_solution: Mapped[str] = mapped_column(String(500), nullable=True)
     task_creation_date = mapped_column(Date, default=date.today)
+
+
     
