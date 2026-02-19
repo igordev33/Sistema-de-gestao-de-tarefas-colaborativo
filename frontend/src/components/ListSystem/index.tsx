@@ -5,15 +5,13 @@ import CreateTaskForm from "../CreateTaskForm"
 import FilterForm from "../FilterForm"
 import TaskItem from "../TaskItem"
 import styles from "./ListSystem.module.css"
-import axios from "axios"
 import PaginationComponent from "../PaginationComponent"
 import CompleteTaskForm from "../CompleteTaskForm"
 import TaskDetailsModal from "../TaskDetailsModal"
+import api from "../../api/axios"
+import { useAuth } from "../../contexts/AuthContext"
 
 function ListSystem() {
-  const api_url = import.meta.env.VITE_API_URL
-  const api_user = import.meta.env.VITE_API_USER
-  const api_password = import.meta.env.VITE_API_PASSWORD
 
   const [taskList, setTaskList] = useState<Task[]>([])
   const [showCreateTaskForm, setShowCreateTaskForm] = useState<boolean>(false)
@@ -28,6 +26,7 @@ function ListSystem() {
   const [showCompleteTaskForm, setShowCompleteTaskForm] = useState(false)
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [showTaskDetails, setShowTaskDetails] = useState(false)
+  const { user, logout } = useAuth()
 
   const showingCreateTaskForm = () => {
     setShowCreateTaskForm(true)
@@ -67,12 +66,7 @@ function ListSystem() {
 
   // Busca os dados da Api ao montar o componente
   useEffect(() => {
-    axios.get<PaginatedResponse<Task>>(`${api_url}/tasks?page=${currentPage}`, {
-      auth: {
-        username: api_user,
-        password: api_password
-      }
-    })
+    api.get<PaginatedResponse<Task>>(`/tasks?page=${currentPage}`)
       .then(response => {
         setTaskList(response.data.tasks)
         setTotalPages(response.data.total_pages)
@@ -84,19 +78,10 @@ function ListSystem() {
   const completeTask = async (data: CompleteTask) => {
     const { task_id, task_solution } = data
     try {
-      await axios.patch(`${api_url}/tasks/${task_id}`, {
+      await api.patch(`/tasks/${task_id}`, {
         task_status: "done",
         task_solution: task_solution
-      }, {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        auth: {
-          username: api_user,
-          password: api_password
-        }
       })
-
       setTaskList(prev => prev.map(task =>
         task.task_id === task_id
           ? { ...task, task_status: "done", task_solution: task_solution }
@@ -110,12 +95,7 @@ function ListSystem() {
 
   //função responsável por criar uma tarefa
   const createTask = (dados: TaskCreate) => {
-    axios.post<CreateTaskData>(`${api_url}/tasks/`, dados, {
-      auth: {
-        username: api_user,
-        password: api_password
-      }
-    })
+    api.post<CreateTaskData>(`/tasks/`, dados)
       .then(response => setTaskList(prev => [response.data.task, ...prev]))
       .catch(error => console.error("Erro ao cadastrar tarefa", error))
   }
@@ -154,39 +134,48 @@ function ListSystem() {
   }
 
   return (
-    <main className={styles.main}>
-      <div className={styles.main__button_container}>
-        <button onClick={showingCreateTaskForm} className={styles.main__add_button}>+ Nova Tarefa</button>
-        <button onClick={showingFilterForm} className={styles.main__filter_button}>Filtrar</button>
-      </div>
+    <>
+      <header className={styles.header}>
+        <div className={styles.header__container}>
+          <h1 className={styles.header__title}>Bem vindo, {user?.name}</h1>
+          <button className={styles.header__logout_button} onClick={logout}>Sair</button>
+        </div>
+      </header>
 
-      {showCreateTaskForm && <CreateTaskForm onSubmit={createTask} closeForm={closingCreateTaskForm} />}
+      <main className={styles.main}>
+        <div className={styles.main__button_container}>
+          <button onClick={showingCreateTaskForm} className={styles.main__add_button}>+ Nova Tarefa</button>
+          <button onClick={showingFilterForm} className={styles.main__filter_button}>Filtrar</button>
+        </div>
 
-      {showFilterForm && <FilterForm onFilterChange={filterTasks} closeForm={closingFilterForm} />}
+        {showCreateTaskForm && <CreateTaskForm onSubmit={createTask} closeForm={closingCreateTaskForm} />}
 
-      {filteredTasks.map((data) => {
-        return (
-          <TaskItem onOpenTaskDetails={openTaskDetails} task={data} onOpenCompleteForm={openCompleteTaskForm} key={data.task_id} />
-        )
-      })}
+        {showFilterForm && <FilterForm onFilterChange={filterTasks} closeForm={closingFilterForm} />}
 
-      {showTaskDetails && selectedTask && (
-        <TaskDetailsModal
-          task={selectedTask}
-          onCloseModal={closeTaskDetails}
-        />
-      )}
+        {filteredTasks.map((data) => {
+          return (
+            <TaskItem onOpenTaskDetails={openTaskDetails} task={data} onOpenCompleteForm={openCompleteTaskForm} key={data.task_id} />
+          )
+        })}
 
-      {showCompleteTaskForm && selectedTask !== null && (
-        <CompleteTaskForm
-          taskId={selectedTask.task_id}
-          onSubmit={completeTask}
-          closeForm={closeCompleteTaskForm}
-        />
-      )}
+        {showTaskDetails && selectedTask && (
+          <TaskDetailsModal
+            task={selectedTask}
+            onCloseModal={closeTaskDetails}
+          />
+        )}
 
-      <PaginationComponent currentPage={currentPage} totalPages={totalPages} onChange={setCurrentPage} increasePage={increasePage} decreasePage={decreasePage} />
-    </main>
+        {showCompleteTaskForm && selectedTask !== null && (
+          <CompleteTaskForm
+            taskId={selectedTask.task_id}
+            onSubmit={completeTask}
+            closeForm={closeCompleteTaskForm}
+          />
+        )}
+
+        <PaginationComponent currentPage={currentPage} totalPages={totalPages} onChange={setCurrentPage} increasePage={increasePage} decreasePage={decreasePage} />
+      </main>
+    </>
   )
 }
 

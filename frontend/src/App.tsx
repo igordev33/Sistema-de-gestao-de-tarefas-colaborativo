@@ -1,10 +1,24 @@
-import ListSystem from "./components/ListSystem"
+import ListSystem from "./components/ListSystem";
+import LoginSystem from "./components/LoginSystem";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import "./layout.css"
 
-function App() {
+function AppContent() {
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    return <LoginSystem />;
+  }
+
   return (
-    <ListSystem/>
+    <ListSystem />
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
+}
