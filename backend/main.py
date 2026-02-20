@@ -6,7 +6,15 @@ from routers import auth_router
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(
+    title="API para sistema de gestão de tarefas",
+    description="API criada para alimentar um sistema de gestão de tarefas",
+    version="1.0.0",
+    contact={
+        "name": "Igor Augusto",
+        "email": "igoraf.dev33@hotmail.com"
+    }
+)
 
 from fastapi.middleware.cors import CORSMiddleware
 
