@@ -1,6 +1,7 @@
 import { useState } from "react"
-import type { TaskCreate, TaskCreatedBy, TaskPriority } from "../../types/TaskTypes"
+import type { TaskCreate, TaskPriority } from "../../types/TaskTypes"
 import styles from "./TaskForm.module.css"
+import { useAuth } from "../../contexts/AuthContext"
 
 type CreateTaskFormProps = {
     onSubmit: (task: TaskCreate) => void
@@ -11,17 +12,22 @@ function CreateTaskForm({ onSubmit, closeForm }: CreateTaskFormProps) {
     const [taskTitle, setTaskTitle] = useState('')
     const [taskDescription, setTaskDescription] = useState('')
     const [taskPriority, setTaskPriority] = useState<TaskPriority>('low')
-    const [taskCreatedBy, setTaskCreatedBy] = useState<TaskCreatedBy>('Igor')
-    
+    const { user } = useAuth()
+
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
+
+        if (!user) {
+            window.alert("Ussuário não autenticado")
+            return
+        }
 
         onSubmit({
             task_title: taskTitle,
             task_description: taskDescription,
             task_priority: taskPriority,
             task_status: "pending",
-            task_created_by: taskCreatedBy
+            task_created_by: user?.name
         })
 
         closeForm()
@@ -31,10 +37,10 @@ function CreateTaskForm({ onSubmit, closeForm }: CreateTaskFormProps) {
         <div className={styles.background_container}>
             <form onSubmit={handleSubmit} className={styles.form_container}>
 
-                <div className={styles.close_form_button_container}><button onClick={closeForm}className={styles.close_form_button}> X </button></div>
+                <div className={styles.close_form_button_container}><button onClick={closeForm} className={styles.close_form_button}> X </button></div>
 
                 <label htmlFor="title" className={styles.form_container__title_label}>Título: </label>
-                <input type="text" id="title" name="title" onChange={e => setTaskTitle(e.target.value)} className={styles.form_container__title_input}/>
+                <input type="text" id="title" name="title" onChange={e => setTaskTitle(e.target.value)} className={styles.form_container__title_input} />
 
                 <br />
 
@@ -42,7 +48,7 @@ function CreateTaskForm({ onSubmit, closeForm }: CreateTaskFormProps) {
 
                 <br />
 
-                <textarea rows={5} id="description" name="description" maxLength={500} onChange={e => setTaskDescription(e.target.value)} className={styles.form_container__description_input}/>
+                <textarea rows={5} id="description" name="description" maxLength={500} onChange={e => setTaskDescription(e.target.value)} className={styles.form_container__description_input} />
 
                 <br />
 
@@ -54,14 +60,6 @@ function CreateTaskForm({ onSubmit, closeForm }: CreateTaskFormProps) {
                         <option value="low">Baixa</option>
                         <option value="medium">Média</option>
                         <option value="high">Alta</option>
-                    </select>
-                </div>
-
-                <div className={styles.label_and_select_container}>
-                    <label htmlFor="created_by" className={styles.form_container__select_label}>Criado por: </label>
-                    <select name="created_by" id="created_by" onChange={e => setTaskCreatedBy(e.target.value as TaskCreatedBy)} className={styles.form_container__select}>
-                        <option value="Igor">Igor</option>
-                        <option value="Visitante">Visitante</option>
                     </select>
                 </div>
 

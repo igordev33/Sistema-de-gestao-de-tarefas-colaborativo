@@ -1,6 +1,5 @@
 export type TaskPriority = 'low' | 'medium' | 'high'
 export type TaskStatus = 'pending' | 'done'
-export type TaskCreatedBy = 'Igor' | 'Visitante'
 
 export type CreateTaskData = {
     message: string
@@ -12,7 +11,7 @@ export type TaskCreate = {
     task_description: string
     task_priority: TaskPriority
     task_status: TaskStatus
-    task_created_by: TaskCreatedBy
+    task_created_by: string
 }
 
 export type CompleteTask = {
